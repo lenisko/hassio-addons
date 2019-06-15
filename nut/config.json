@@ -1,0 +1,35 @@
+{
+  "name": "Network UPS Tools",
+  "version": "0.2",
+  "slug": "nut",
+  "description": "Manage Uninterruptible Power Supplies",
+  "arch": ["amd64","armhf","aarch64"],
+  "startup": "before",
+  "devices": ["/dev/bus/usb:/dev/bus/usb:rwm"],
+  "ports": {
+    "3493/tcp": 3493
+  },
+  "boot": "auto",
+  "options": {
+    "logins": [
+      { "username": "nut", "password": "changeme", "instcmds": "all" }
+    ],
+    "ups": [
+      { "upsname": "ups", "driver": "usbhid-ups", "port": "auto" }
+    ],
+    "bindaddr": "0.0.0.0",
+    "bindport": "3493",
+    "mode": "netserver"
+  },
+  "schema": {
+    "logins": [
+      { "username": "str", "password": "str", "instcmds": "str" }
+    ],
+    "ups": [
+      { "upsname": "str", "driver": "str", "port": "str" }
+    ],
+    "bindaddr": "str",
+    "bindport": "port",
+    "mode": "str"
+  }
+}
