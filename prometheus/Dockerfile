@@ -25,7 +25,6 @@ RUN \
         py3-yaml=5.4.1.1-r1 \
         py3-urllib3=1.26.6-r0 \
         py3-requests=2.25.1-r4 \
-    && apk --no-cache add --virtual .builddeps \
         py3-pip=20.3.4-r1
 
 # Build arguments
