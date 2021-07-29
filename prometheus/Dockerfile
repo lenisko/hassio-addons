@@ -26,20 +26,7 @@ RUN \
         py3-urllib3=1.26.6-r0 \
         py3-requests=2.25.1-r4 \
     && apk --no-cache add --virtual .builddeps \
-        py3-pip=20.3.4-r1 \
-    \
-    && curl -J -L -o /tmp/prometheus.tar.gz \
-        "https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}.tar.gz" \
-    && adduser -s /bin/false -D -H prometheus \
-    && cd /tmp \
-    && tar -xvf /tmp/prometheus.tar.gz \
-    && mkdir -p /etc/prometheus \
-    && cp prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/promtool /usr/local/bin/ \
-    && cp prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/prometheus /usr/local/bin/ \
-    && cp -R prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/console_libraries/ /etc/prometheus/ \
-    && cp -R prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/consoles/ /etc/prometheus/ \
-    && rm -r prometheus-${PROMETHEUS_VERSION}.linux-${ARCH} \
-    && chown -R prometheus:prometheus /etc/prometheus
+        py3-pip=20.3.4-r1
 
 # Build arguments
 ARG BUILD_DATE
