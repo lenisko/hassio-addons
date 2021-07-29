@@ -39,16 +39,7 @@ RUN \
     && cp -R prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/console_libraries/ /etc/prometheus/ \
     && cp -R prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/consoles/ /etc/prometheus/ \
     && rm -r prometheus-${PROMETHEUS_VERSION}.linux-${ARCH} \
-    && chown -R prometheus:prometheus /etc/prometheus \
-    && pip3 install \
-        --no-cache-dir \
-        --prefer-binary \
-        --find-links "https://wheels.home-assistant.io/alpine-3.14/${BUILD_ARCH}/" \
-        -r /opt/prometheus-configgen/requirements.txt \
-    \
-    && apk --no-cache del .builddeps \
-    && rm -f -r \
-        /tmp/*
+    && chown -R prometheus:prometheus /etc/prometheus
 
 # Build arguments
 ARG BUILD_DATE
