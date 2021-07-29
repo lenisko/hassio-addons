@@ -25,7 +25,30 @@ RUN \
         py3-yaml=5.4.1.1-r1 \
         py3-urllib3=1.26.6-r0 \
         py3-requests=2.25.1-r4 \
-        py3-pip=20.3.4-r1
+    && apk --no-cache add --virtual .builddeps \
+        py-pip=20.2.4-r0 \
+    \
+    && curl -J -L -o /tmp/prometheus.tar.gz \
+        "https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}.tar.gz" \
+    && adduser -s /bin/false -D -H prometheus \
+    && cd /tmp \
+    && tar -xvf /tmp/prometheus.tar.gz \
+    && mkdir -p /etc/prometheus \
+    && cp prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/promtool /usr/local/bin/ \
+    && cp prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/prometheus /usr/local/bin/ \
+    && cp -R prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/console_libraries/ /etc/prometheus/ \
+    && cp -R prometheus-${PROMETHEUS_VERSION}.linux-${ARCH}/consoles/ /etc/prometheus/ \
+    && rm -r prometheus-${PROMETHEUS_VERSION}.linux-${ARCH} \
+    && chown -R prometheus:prometheus /etc/prometheus \
+    && pip3 install \
+        --no-cache-dir \
+        --prefer-binary \
+        --find-links "https://wheels.home-assistant.io/alpine-3.14/${BUILD_ARCH}/" \
+        -r /opt/prometheus-configgen/requirements.txt \
+    \
+    && apk --no-cache del .builddeps \
+    && rm -f -r \
+        /tmp/*
 
 # Build arguments
 ARG BUILD_DATE
